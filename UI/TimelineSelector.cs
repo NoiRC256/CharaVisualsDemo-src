@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
+using TMPro;
 
 public class TimelineSelector : MonoBehaviour
 {
     /*
-    On start, create Timeline selection buttons vertically,
+    On start, create Timeline selection buttons,
     each with a Display Name and Playable Director reference.
     Clicking a button plays the corresponding Playable Director.
     */
@@ -22,7 +23,9 @@ public class TimelineSelector : MonoBehaviour
     }
     public TimelineInfo[] timelineInfoArray;
     public GameObject buttonPrefab;  // Timeline selection button prefab;
-    public float yOffset = -30f;  // Offset for each new button;
+    //public float yOffset = -30f;  // Y offset for each new button;
+    public Vector3 initPos = new Vector3(0f, 0f, 0f);
+    public Vector3 posOffset = new Vector3(0f, -30f, 0f); // Offset for each new button;
 
     #endregion
 
@@ -30,7 +33,7 @@ public class TimelineSelector : MonoBehaviour
 
     private void Start()
     {
-        float _ypos = 0f;
+        Vector3 _pos = initPos;
         // For each Timeline Info, create a button;
         foreach(TimelineInfo timelineInfo in timelineInfoArray)
         {
@@ -42,12 +45,14 @@ public class TimelineSelector : MonoBehaviour
 
             // Set position;
             RectTransform _buttonRect = _buttonObject.GetComponent<RectTransform>();
-            _buttonRect.localPosition = new Vector3(0f, _ypos, 0f);
-            _ypos += yOffset;
+            //_buttonRect.localPosition = new Vector3(0f, _ypos, 0f);
+            _buttonRect.localPosition = _pos;
+            //_ypos += yOffset;
+            _pos += posOffset;
 
             // Set button text;
-            // TODO: Replace with TextMeshPro;
-            _buttonObject.GetComponentInChildren<Text>().text = timelineInfo.displayName;
+            //_buttonObject.GetComponentInChildren<Text>().text = timelineInfo.displayName;
+            _buttonObject.GetComponentInChildren<TextMeshProUGUI>().SetText(timelineInfo.displayName);
 
             // Set button OnClick to SelectTimeline() function;
             Button _button = _buttonObject.GetComponent<Button>();

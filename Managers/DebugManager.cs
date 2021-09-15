@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class DebugManager : MonoBehaviour
 {
@@ -9,12 +10,12 @@ public class DebugManager : MonoBehaviour
     public GameObject framerateTextObject;
     public bool showFramerate = true;
 
-    private Text framerateText;
+    private TextMeshProUGUI framerateText;
     private int fpsDelay = 0;
 
     private void Awake()
     {
-        framerateText = framerateTextObject.GetComponent<Text>();
+        framerateText = framerateTextObject.GetComponent<TextMeshProUGUI>();
     }
 
     private void Update()
@@ -46,6 +47,6 @@ public class DebugManager : MonoBehaviour
         float msec = Time.deltaTime * 1000.0f;
         float fps = 1.0f / Time.deltaTime;
         string text = string.Format("{1:0.} fps\n{0:0.0} ms", msec, fps);
-        framerateText.text = text;
+        framerateText.SetText(text);
     }
 }
